@@ -1,0 +1,12 @@
+C:\Users\JC\source\repos\Voice Recognition\Voice Recognition\obj\Debug\Voice Recognition.vbprojAssemblyReference.cache
+C:\Users\JC\source\repos\Voice Recognition\Voice Recognition\obj\Debug\Voice_Recognition.Resources.resources
+C:\Users\JC\source\repos\Voice Recognition\Voice Recognition\obj\Debug\Voice Recognition.vbproj.GenerateResource.cache
+C:\Users\JC\source\repos\Voice Recognition\Voice Recognition\bin\Debug\Voice Recognition.exe.config
+C:\Users\JC\source\repos\Voice Recognition\Voice Recognition\bin\Debug\Voice Recognition.exe
+C:\Users\JC\source\repos\Voice Recognition\Voice Recognition\bin\Debug\Voice Recognition.pdb
+C:\Users\JC\source\repos\Voice Recognition\Voice Recognition\bin\Debug\Voice Recognition.xml
+C:\Users\JC\source\repos\Voice Recognition\Voice Recognition\bin\Debug\Microsoft.Speech.dll
+C:\Users\JC\source\repos\Voice Recognition\Voice Recognition\obj\Debug\Voice Recognition.vbproj.CopyComplete
+C:\Users\JC\source\repos\Voice Recognition\Voice Recognition\obj\Debug\Voice Recognition.exe
+C:\Users\JC\source\repos\Voice Recognition\Voice Recognition\obj\Debug\Voice Recognition.xml
+C:\Users\JC\source\repos\Voice Recognition\Voice Recognition\obj\Debug\Voice Recognition.pdb
