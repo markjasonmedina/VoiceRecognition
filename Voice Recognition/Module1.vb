@@ -1,44 +1,49 @@
 ﻿Imports System
+Imports System.Globalization
+Imports System.IO.Ports  'This library is for connecting vb.net and Arduino to transmit and receive data through ports
+'Below are libraries for voice recognition
 Imports Microsoft.Speech.Recognition
 Imports Microsoft.Speech.Synthesis
-Imports System.Globalization
+
 
 Module Module1
-
+    Private myPort As SerialPort = New SerialPort()
     Public ss As SpeechSynthesizer = New SpeechSynthesizer()
     Public sre As SpeechRecognitionEngine
     Public done As Boolean = False
     Public speechOn As Boolean = True
 
     Sub Main()
+        myPort.PortName = "COM7"
+        myPort.BaudRate = 9600
         Try
             ss.SetOutputToDefaultAudioDevice()
             Console.WriteLine(vbLf & "(Speaking: I am awake)")
             ss.Speak("I am awake")
+
             Dim ci As CultureInfo = New CultureInfo("en-us")
             sre = New SpeechRecognitionEngine(ci)
             sre.SetInputToDefaultAudioDevice()
+
             AddHandler sre.SpeechRecognized, AddressOf sre_SpeechRecognized
-            Dim ch_StartStopCommands As Choices = New Choices()
-            ch_StartStopCommands.Add("on")
-            ch_StartStopCommands.Add("speech off")
-            ch_StartStopCommands.Add("klatu barada nikto")
-            Dim gb_StartStop As GrammarBuilder = New GrammarBuilder()
-            gb_StartStop.Append(ch_StartStopCommands)
-            Dim g_StartStop As Grammar = New Grammar(gb_StartStop)
+
             Dim ch_Numbers As Choices = New Choices()
-            ch_Numbers.Add("1")
-            ch_Numbers.Add("2")
-            ch_Numbers.Add("3")
-            ch_Numbers.Add("4")
-            Dim gb_WhatIsXplusY As GrammarBuilder = New GrammarBuilder()
-            gb_WhatIsXplusY.Append("What is")
-            gb_WhatIsXplusY.Append(ch_Numbers)
-            gb_WhatIsXplusY.Append("plus")
-            gb_WhatIsXplusY.Append(ch_Numbers)
-            Dim g_WhatIsXplusY As Grammar = New Grammar(gb_WhatIsXplusY)
-            sre.LoadGrammarAsync(g_StartStop)
-            sre.LoadGrammarAsync(g_WhatIsXplusY)
+            ch_Numbers.Add("one")
+            ch_Numbers.Add("two")
+            ch_Numbers.Add("six")
+            ch_Numbers.Add("apple")
+
+            Dim str_OnOff As Choices = New Choices()
+            str_OnOff.Add("up")
+            str_OnOff.Add("down")
+
+            Dim gb_SwitchOnOff As GrammarBuilder = New GrammarBuilder()
+            gb_SwitchOnOff.Append("Switch")
+            gb_SwitchOnOff.Append(str_OnOff)
+            gb_SwitchOnOff.Append(ch_Numbers)
+            Dim g_SwitchOnOff As Grammar = New Grammar(gb_SwitchOnOff)
+
+            sre.LoadGrammarAsync(g_SwitchOnOff)
             sre.RecognizeAsync(RecognizeMode.Multiple)
 
             While done = False
@@ -57,35 +62,57 @@ Module Module1
         Dim txt As String = e.Result.Text
         Dim confidence As Single = e.Result.Confidence
         Console.WriteLine(vbLf & "Recognized: " & txt)
-        If confidence < 0.1 Then Return
+        'If confidence < 0.2 Then Return
 
-        If txt.IndexOf("on") >= 0 Then
-            Console.WriteLine("Speech is now ON")
-            speechOn = True
-        End If
+        'If speechOn = False Then Return
 
-        If txt.IndexOf("speech off") >= 0 Then
-            Console.WriteLine("Speech is now OFF")
-            speechOn = False
-        End If
-
-        If speechOn = False Then Return
-
-        If txt.IndexOf("klatu") >= 0 AndAlso txt.IndexOf("barada") >= 0 Then
-            CType(sender, SpeechRecognitionEngine).RecognizeAsyncCancel()
-            done = True
-            Console.WriteLine("(Speaking: Farewell)")
-            ss.Speak("Farewell")
-        End If
-
-        If txt.IndexOf("What") >= 0 AndAlso txt.IndexOf("plus") >= 0 Then
+        If txt.IndexOf("Switch") >= 0 Then
             Dim words As String() = txt.Split(" "c)
-            Dim num1 As Integer = Integer.Parse(words(2))
-            Dim num2 As Integer = Integer.Parse(words(4))
-            Dim sum As Integer = num1 + num2
-            Console.WriteLine("(Speaking: " & words(2) & " plus " & words(4) & " equals " & sum & ")")
-            ss.SpeakAsync(words(2) & " plus " & words(4) & " equals " & sum)
+            'Dim num1 As Integer = Integer.Parse(words(2))
+
+            If (words(1) = "up" AndAlso words(2) = "one") Then
+                sendDataToArduino("B"c)
+            End If
+
+            If (words(1) = "down" AndAlso words(2) = "one") Then
+                sendDataToArduino("Z"c)
+            End If
+
+            If (words(1) = "up" AndAlso words(2) = "two") Then
+                sendDataToArduino("R"c)
+            End If
+
+            If (words(1) = "down" AndAlso words(2) = "two") Then
+                sendDataToArduino("X"c)
+            End If
+
+            If (words(1) = "up" AndAlso words(2) = "six") Then
+                sendDataToArduino("G"c)
+            End If
+
+            If (words(1) = "down" AndAlso words(2) = "six") Then
+                sendDataToArduino("C"c)
+            End If
+
+            If (words(1) = "up" AndAlso words(2) = "apple") Then
+                sendDataToArduino("V"c)
+            End If
+
+            If (words(1) = "down" AndAlso words(2) = "apple") Then
+                sendDataToArduino("M"c)
+            End If
+
+            Console.WriteLine("(Speaking: Device " & words(2) & " is " & words(1) & ")")
+            ss.SpeakAsync("Device " & words(2) & " is " & words(1))
         End If
+
+
+    End Sub
+
+    Private Sub sendDataToArduino(ByVal character As Char)
+        myPort.Open()
+        myPort.Write(character.ToString())
+        myPort.Close()
     End Sub
 
 End Module
