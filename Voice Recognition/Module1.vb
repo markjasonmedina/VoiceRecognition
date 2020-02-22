@@ -56,6 +56,8 @@ Module Module1
             Console.ReadLine()
         End Try
 
+
+
     End Sub
 
     Private Sub sre_SpeechRecognized(ByVal sender As Object, ByVal e As SpeechRecognizedEventArgs)
