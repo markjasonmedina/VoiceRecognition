@@ -10,3 +10,7 @@ C:\Users\JC\source\repos\Voice Recognition\Voice Recognition\obj\Debug\Voice Rec
 C:\Users\JC\source\repos\Voice Recognition\Voice Recognition\obj\Debug\Voice Recognition.exe
 C:\Users\JC\source\repos\Voice Recognition\Voice Recognition\obj\Debug\Voice Recognition.xml
 C:\Users\JC\source\repos\Voice Recognition\Voice Recognition\obj\Debug\Voice Recognition.pdb
+D:\Users\Marianne Guinto\Desktop\VoiceRecognition\Voice Recognition\bin\Debug\Voice Recognition.exe.config
+D:\Users\Marianne Guinto\Desktop\VoiceRecognition\Voice Recognition\obj\Debug\Voice Recognition.exe
+D:\Users\Marianne Guinto\Desktop\VoiceRecognition\Voice Recognition\obj\Debug\Voice Recognition.xml
+D:\Users\Marianne Guinto\Desktop\VoiceRecognition\Voice Recognition\obj\Debug\Voice Recognition.pdb

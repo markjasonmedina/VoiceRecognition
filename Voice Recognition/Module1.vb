@@ -14,7 +14,7 @@ Module Module1
     Public speechOn As Boolean = True
 
     Sub Main()
-        myPort.PortName = "COM7"
+        myPort.PortName = "COM5"
         myPort.BaudRate = 9600
         Try
             ss.SetOutputToDefaultAudioDevice()
@@ -30,8 +30,8 @@ Module Module1
             Dim ch_Numbers As Choices = New Choices()
             ch_Numbers.Add("one")
             ch_Numbers.Add("two")
-            ch_Numbers.Add("six")
-            ch_Numbers.Add("apple")
+            ch_Numbers.Add("three")
+            ch_Numbers.Add("all")
 
             Dim str_OnOff As Choices = New Choices()
             str_OnOff.Add("up")
@@ -88,19 +88,19 @@ Module Module1
                 sendDataToArduino("X"c)
             End If
 
-            If (words(1) = "up" AndAlso words(2) = "six") Then
+            If (words(1) = "up" AndAlso words(2) = "three") Then
                 sendDataToArduino("G"c)
             End If
 
-            If (words(1) = "down" AndAlso words(2) = "six") Then
+            If (words(1) = "down" AndAlso words(2) = "three") Then
                 sendDataToArduino("C"c)
             End If
 
-            If (words(1) = "up" AndAlso words(2) = "apple") Then
+            If (words(1) = "up" AndAlso words(2) = "all") Then
                 sendDataToArduino("V"c)
             End If
 
-            If (words(1) = "down" AndAlso words(2) = "apple") Then
+            If (words(1) = "down" AndAlso words(2) = "all") Then
                 sendDataToArduino("M"c)
             End If
 
